@@ -35,12 +35,20 @@ public class Order {
         return subTotal;
     }
 
-    public PaymentMethod getPaymentMethod() {
-        return paymentMethod;
-    }
-
     public double getDiscountPercentage() {
         return discountPercentage;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
     }
 
     public ArrayList<String> getFoodOrdered() {
@@ -48,10 +56,40 @@ public class Order {
     }
 
 
+    // Setters
+    public void setOrderNumber(int orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    public void setSubTotal(double subTotal) {
+        this.subTotal = subTotal;
+    }
+
+    public void setDiscountPercentage(double discountPercentage) {
+        this.discountPercentage = discountPercentage;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public void setFoodOrdered(ArrayList<String> foodOrdered) {
+        this.foodOrdered = foodOrdered;
+    }
+
+
     // Manual toString metode
     @Override
     public String toString() {
-        return "Order Number: " + orderNumber + " | Subtotal: $" + subTotal + " | Discount: $" + discount + " | Total: $" + total + "\nPayment method: " + paymentMethod + "\nOrder:\n" + foodOrdered;
+        return "Order Number: " + orderNumber + " | Subtotal: $" + subTotal + " | Discount: $" + discount + " (" + discountPercentage + "%) | Total: $" + total + "\nPayment method: " + paymentMethod + "\nOrder:\n" + foodOrdered;
     }
 
 }
