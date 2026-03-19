@@ -1,11 +1,11 @@
 package model;
 
-public class Customer {
+public abstract class Customer {
 
     // Attributes
     private String name;
     private int phoneNumber;
-    private CustomerType customerType;
+    private String customerType;
     private double discountPercentage;
 
 
@@ -13,24 +13,11 @@ public class Customer {
     public Customer() {
         this.name = "Unknown";
         this.phoneNumber = 0;
-        this.customerType = CustomerType.NormalCustomer;
-        this.discountPercentage = 0;
     }
 
-    public Customer(String name, int phoneNumber, CustomerType customerType) {
+    public Customer(String name, int phoneNumber) {
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.customerType = customerType;
-        if (customerType.equals(CustomerType.NormalCustomer)) {
-            this.discountPercentage = 0;
-        } else if (customerType.equals(CustomerType.VIPCustomer)) {
-            this.discountPercentage = 10;
-        } else if (customerType.equals(CustomerType.EmployeeCustomer)) {
-            this.discountPercentage = 20;
-        } else {
-            this.discountPercentage = 0;
-            System.out.println("An error has occured with customer type.");
-        }
     }
 
 
@@ -43,7 +30,7 @@ public class Customer {
         return phoneNumber;
     }
 
-    public CustomerType getCustomerType() {
+    public String getCustomerType() {
         return customerType;
     }
 
@@ -61,7 +48,7 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setCustomerType(CustomerType customerType) {
+    public void setCustomerType(String customerType) {
         this.customerType = customerType;
     }
 

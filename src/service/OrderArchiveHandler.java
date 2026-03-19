@@ -20,37 +20,31 @@ public class OrderArchiveHandler {
 
 
     // Methods
-    public void saveOrders() {
+    public void addOrder(Customer customer, Order order) {
         readOrders();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("orders.txt", true))) {
 
-            for (int i = 0; i < customers.size() && i < orders.size(); i++) {
+            writer.write(customer.getPhoneNumber() + ",");
+            writer.write(customer.getCustomerType() + ",");
 
-                Customer currentCustomer = customers.get(i);
-                Order currentOrder = orders.get(i);
-
-                writer.write(currentCustomer.getName() + ",");
-                writer.write(currentCustomer.getPhoneNumber() + ",");
-                writer.write(currentCustomer.getCustomerType().name() + ",");
-
-                if (orders.isEmpty()) {
-                    writer.write(1 + ",");
-                } else {
-                    int newOrderNumber = getLastOrderNumber() + 1;
-                    writer.write(newOrderNumber);
-                }
-                writer.write(currentOrder.getSubTotal() + ",");
-                writer.write(currentOrder.getDiscountPercentage() + ",");
-                writer.write(currentOrder.getPaymentMethod().name() + ",");
-                int lastIndex = currentOrder.getFoodOrdered().size();
-                for (int index = 0; index < lastIndex; index++) {
-                    Pizza currentPizza = currentOrder.getFoodOrdered().get(index);
-                    writer.write(currentPizza.getName() + ";" + currentPizza.getIngredients() + ";" + currentPizza.getPrice() + ",");
-                }
-                writer.write(currentOrder.getFoodOrdered().get(lastIndex).getName());
-
-                writer.write(System.lineSeparator());
+            if (orders.isEmpty()) {
+                writer.write(1 + ",");
+            } else {
+                int newOrderNumber = getLastOrderNumber() + 1;
+                writer.write(newOrderNumber);
             }
+            writer.write(order.getSubTotal() + ",");
+            writer.write(order.getDiscountPercentage() + ",");
+            writer.write(order.getPaymentMethod().name() + ",");
+            int lastIndex = order.getFoodOrdered().size();
+            for (int index = 0; index < lastIndex; index++) {
+                Pizza currentPizza = order.getFoodOrdered().get(index);
+                writer.write(currentPizza.getName() + ";" + currentPizza.getIngredients() + ";" + currentPizza.getPrice() + ",");
+            }
+            writer.write(order.getFoodOrdered().get(lastIndex).getName());
+
+            writer.write(customer.getName() + ",");
+            writer.write(System.lineSeparator());
 
             writer.flush();
         } catch (IOException e) {
@@ -59,7 +53,9 @@ public class OrderArchiveHandler {
     }
 
 
-    public void readOrders() {
+    private void readOrders() {
+        customers.clear();
+        orders.clear();
         try (BufferedReader reader = new BufferedReader(new FileReader("orders.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -67,8 +63,19 @@ public class OrderArchiveHandler {
 
                 String name = parts[0];
                 int phoneNumber = Integer.parseInt(parts[1]);
-                CustomerType customerType = CustomerType.valueOf(parts[2]);
-                Customer customer = new Customer(name, phoneNumber, customerType);
+                String customerType = parts[2];
+                // Customer customer = new Customer(name, phoneNumber, customerType);
+                Customer customer;
+                if (customerType.equals("Normal Customer")) {
+                    customer = new NormalCustomer(name, phoneNumber);
+                } else if (customerType.equals("VIP Customer")) {
+                    customer = new VIPCustomer(name, phoneNumber);
+                } else if (customerType.equals("Employee Customer")) {
+                    customer = new EmployeeCustomer(name, phoneNumber);
+                } else {
+                    customer = new NormalCustomer(name, phoneNumber);
+                    System.out.println("Invalid customer type in CSV file. Defaulting to Normal Customer.");
+                }
                 customers.add(customer);
 
                 int orderNumber = Integer.parseInt(parts[3]);
@@ -100,6 +107,16 @@ public class OrderArchiveHandler {
     public int getLastOrderNumber() {
         readOrders();
         return orders.getLast().getOrderNumber();
+    }
+
+    public ArrayList<Order> getOrders() {
+        readOrders();
+        return orders;
+    }
+
+    public ArrayList<Customer> getCustomers() {
+        readOrders();
+        return customers;
     }
 
 }
