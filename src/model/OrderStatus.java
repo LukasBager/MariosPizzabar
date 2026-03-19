@@ -3,5 +3,7 @@ package model;
 public enum OrderStatus {
     PENDING,
     READY,
-    COMPLETED
+    COMPLETED,
+    PICKED_UP,
+    CANCELLED
 }
