@@ -64,7 +64,6 @@ public class OrderArchiveHandler {
                 String name = parts[0];
                 int phoneNumber = Integer.parseInt(parts[1]);
                 String customerType = parts[2];
-                // Customer customer = new Customer(name, phoneNumber, customerType);
                 Customer customer;
                 if (customerType.equals("Normal Customer")) {
                     customer = new NormalCustomer(name, phoneNumber);
