@@ -11,11 +11,11 @@ public class Order {
     private double discount;
     private double total;
     private PaymentMethod paymentMethod;
-    private ArrayList<String> foodOrdered;
+    private ArrayList<Pizza> foodOrdered;
 
 
     // Constructor
-    public Order(double subTotal, PaymentMethod paymentMethod, double discountPercentage, ArrayList<String> foodOrdered) {
+    public Order(double subTotal, PaymentMethod paymentMethod, double discountPercentage, ArrayList<Pizza> foodOrdered) {
         // ADD LOGIC TIL ORDER NUMBER
         this.subTotal = subTotal;
         this.discountPercentage = discountPercentage;
@@ -51,7 +51,7 @@ public class Order {
         return paymentMethod;
     }
 
-    public ArrayList<String> getFoodOrdered() {
+    public ArrayList<Pizza> getFoodOrdered() {
         return foodOrdered;
     }
 
@@ -81,7 +81,7 @@ public class Order {
         this.paymentMethod = paymentMethod;
     }
 
-    public void setFoodOrdered(ArrayList<String> foodOrdered) {
+    public void setFoodOrdered(ArrayList<Pizza> foodOrdered) {
         this.foodOrdered = foodOrdered;
     }
 

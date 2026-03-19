@@ -1,4 +1,7 @@
 package model;
 
-public class Pizza {
+public enum Pizza {
+    PEPPERONI,
+    MARGHERITA,
+    CAPRICCIOSA
 }
