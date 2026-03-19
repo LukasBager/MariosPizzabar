@@ -7,14 +7,19 @@ import java.util.ArrayList;
 
 public class OrderArchiveHandler {
 
+    // Attributes
     private static ArrayList<Customer> customers;
     private static ArrayList<Order> orders;
 
+
+    // Constructor
     public OrderArchiveHandler() {
         customers = new ArrayList<>();
         orders = new ArrayList<>();
     }
 
+
+    // Methods
     public void saveOrders() {
         readOrders();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("orders.txt", true))) {
@@ -53,6 +58,7 @@ public class OrderArchiveHandler {
         }
     }
 
+
     public void readOrders() {
         try (BufferedReader reader = new BufferedReader(new FileReader("orders.txt"))) {
             String line;
@@ -89,6 +95,7 @@ public class OrderArchiveHandler {
             System.out.println("File error: " + e);
         }
     }
+
 
     public int getLastOrderNumber() {
         readOrders();
