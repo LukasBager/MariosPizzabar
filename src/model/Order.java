@@ -15,8 +15,8 @@ public class Order {
 
 
     // Constructor
-    public Order(double subTotal, PaymentMethod paymentMethod, double discountPercentage, ArrayList<Pizza> foodOrdered) {
-        // ADD LOGIC TIL ORDER NUMBER
+    public Order(int orderNumber, double subTotal, double discountPercentage, PaymentMethod paymentMethod, ArrayList<Pizza> foodOrdered) {
+        this.orderNumber = orderNumber;
         this.subTotal = subTotal;
         this.discountPercentage = discountPercentage;
         this.discount = subTotal * discountPercentage;
