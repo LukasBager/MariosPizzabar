@@ -37,8 +37,8 @@ public class OrderArchiveHandler {
                 writer.write(currentOrder.getSubTotal() + ",");
                 writer.write(currentOrder.getDiscountPercentage() + ",");
                 writer.write(currentOrder.getPaymentMethod().name() + ",");
-                int lastIndex = currentOrder.getFoodOrdered().size() - 1;
-                for (int index = 0; i < lastIndex; index++) {
+                int lastIndex = currentOrder.getFoodOrdered().size();
+                for (int index = 0; index < lastIndex; index++) {
                     Pizza currentPizza = currentOrder.getFoodOrdered().get(index);
                     writer.write(currentPizza.getName() + ";" + currentPizza.getIngredients() + ";" + currentPizza.getPrice() + ",");
                 }
@@ -92,8 +92,7 @@ public class OrderArchiveHandler {
 
     public int getLastOrderNumber() {
         readOrders();
-        int lastOrderNumber = orders.getLast().getOrderNumber();
-        return lastOrderNumber;
+        return orders.getLast().getOrderNumber();
     }
 
 }
