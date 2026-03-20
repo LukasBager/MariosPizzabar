@@ -9,7 +9,7 @@ import java.util.LinkedList;
 public class Menu {
 
     private List<Pizza> pizzas = new ArrayList<>();
-
+    //.'er
     public Menu() {
         pizzas.add(new Pizza("Vesuvio","tomatsauce, ost, skinke og oregano", 57));
         pizzas.add(new Pizza("Amerikaner", "tomatsauce, ost, oksefars og oregano", 53));
