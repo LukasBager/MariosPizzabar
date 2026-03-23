@@ -189,7 +189,6 @@ public class MariosPizzabarUI {
                 System.out.println();
             }
         }
-        System.out.println();
     }
 
     public static void printCustomers() {
@@ -203,7 +202,6 @@ public class MariosPizzabarUI {
                 System.out.println(c);
             }
         }
-        System.out.println();
     }
 
 }

@@ -19,7 +19,7 @@ public class Order {
         this.orderNumber = orderNumber;
         this.subTotal = subTotal;
         this.discountPercentage = discountPercentage;
-        this.discount = subTotal * discountPercentage;
+        this.discount = subTotal * (discountPercentage / 100);
         this.total = subTotal - this.discount;
         this.paymentMethod = paymentMethod;
         this.pizzaOrdered = pizzaOrdered;
