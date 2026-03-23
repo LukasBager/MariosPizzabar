@@ -1,5 +1,6 @@
 package ui;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import model.*;
@@ -39,6 +40,12 @@ public class MariosPizzabarUI {
                     addOrder();
                     break;
                 case 3:
+                    printOrders();
+                    break;
+                case 4:
+                    printCustomers();
+                    break;
+                case 5:
                     running = false;
                     break;
             }
@@ -51,7 +58,9 @@ public class MariosPizzabarUI {
         System.out.println("Vælg en mulighed forneden:");
         System.out.println("1. Print menu");
         System.out.println("2. Opret ordre");
-        System.out.println("3. Afslut");
+        System.out.println("3. Se ordrehistorik");
+        System.out.println("4. Se liste over kunder");
+        System.out.println("5. Afslut");
     }
 
     public static void printMenu() {
@@ -164,6 +173,37 @@ public class MariosPizzabarUI {
         orderArchiveHandler.addOrder(customer, order);
         System.out.println("Order added");
 
+    }
+
+    public static void printOrders() {
+        ArrayList<Order> orders = orderArchiveHandler.getOrders();
+        ArrayList<Customer> customers = orderArchiveHandler.getCustomers();
+        System.out.println();
+        if (orders.isEmpty()) {
+            System.out.println("Order list empty.");
+        } else {
+            System.out.println("Orders:");
+            for (int i = 0; i < orders.size(); i++) {
+                System.out.println(customers.get(i));
+                System.out.println(orders.get(i));
+                System.out.println();
+            }
+        }
+        System.out.println();
+    }
+
+    public static void printCustomers() {
+        ArrayList<Customer> customers = orderArchiveHandler.getCustomers();
+        System.out.println();
+        if (customers.isEmpty()) {
+            System.out.println("Customer list empty.");
+        } else {
+            System.out.println("Customers:");
+            for (Customer c : customers) {
+                System.out.println(c);
+            }
+        }
+        System.out.println();
     }
 
 }

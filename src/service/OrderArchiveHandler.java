@@ -26,7 +26,9 @@ public class OrderArchiveHandler {
             writer.write(order.getSubTotal() + ",");
             writer.write(order.getDiscountPercentage() + ",");
             writer.write(order.getPaymentMethod().name() + ",");
-            writer.write(order.getPizzaOrdered().getName());
+            writer.write(order.getPizzaOrdered().getName() + ",");
+            writer.write(order.getPizzaOrdered().getIngredients() + ",");
+            writer.write(Double.toString(order.getPizzaOrdered().getPrice()));
 
             writer.write(System.lineSeparator());
 
@@ -38,6 +40,8 @@ public class OrderArchiveHandler {
     }
 
     public void readOrders() {
+        customers.clear();
+        orders.clear();
         try (BufferedReader reader = new BufferedReader(new FileReader("orders.txt"))){
             String line;
             while ((line = reader.readLine()) != null) {
@@ -48,19 +52,8 @@ public class OrderArchiveHandler {
                 int customerPhoneNumber = Integer.parseInt(parts[1]);
                 String customerType = parts[2];
 
-                int orderNumber = Integer.parseInt(parts[3]);
-                double subTotal = Double.parseDouble(parts[4]);
-                double discountPercentage = Double.parseDouble(parts[5]);
-                PaymentMethod paymentMethod = PaymentMethod.valueOf(parts[6]);
-
-                // FIX INGREDIENTS OG PRICE
-                Pizza pizzaOrdered = new Pizza(parts[7], "", 0);
-
-
                 Customer customer;
-                if (customerType.equals("Normal Customer")) {
-                    customer = new NormalCustomer(customerName, customerPhoneNumber);
-                } else if (customerType.equals("VIP Customer")) {
+                if (customerType.equals("VIP Customer")) {
                     customer = new VIPCustomer(customerName, customerPhoneNumber);
                 } else if (customerType.equals("Employee Customer")) {
                     customer = new EmployeeCustomer(customerName, customerPhoneNumber);
@@ -70,11 +63,15 @@ public class OrderArchiveHandler {
 
                 customers.add(customer);
 
+
+                int orderNumber = Integer.parseInt(parts[3]);
+                double subTotal = Double.parseDouble(parts[4]);
+                double discountPercentage = Double.parseDouble(parts[5]);
+                PaymentMethod paymentMethod = PaymentMethod.valueOf(parts[6]);
+                Pizza pizzaOrdered = new Pizza(parts[7], parts[8], Double.parseDouble(parts[9]));
+
                 Order order = new Order(orderNumber, subTotal, discountPercentage, paymentMethod, pizzaOrdered);
-
                 orders.add(order);
-
-
 
             }
         } catch (IOException e) {
