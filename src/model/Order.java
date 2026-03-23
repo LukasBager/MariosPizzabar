@@ -11,18 +11,18 @@ public class Order {
     private double discount;
     private double total;
     private PaymentMethod paymentMethod;
-    private ArrayList<Pizza> foodOrdered;
+    private Pizza pizzaOrdered;
 
 
     // Constructor
-    public Order(int orderNumber, double subTotal, double discountPercentage, PaymentMethod paymentMethod, ArrayList<Pizza> foodOrdered) {
+    public Order(int orderNumber, double subTotal, double discountPercentage, PaymentMethod paymentMethod, Pizza pizzaOrdered) {
         this.orderNumber = orderNumber;
         this.subTotal = subTotal;
         this.discountPercentage = discountPercentage;
         this.discount = subTotal * discountPercentage;
         this.total = subTotal - this.discount;
         this.paymentMethod = paymentMethod;
-        this.foodOrdered = foodOrdered;
+        this.pizzaOrdered = pizzaOrdered;
     }
 
 
@@ -51,8 +51,8 @@ public class Order {
         return paymentMethod;
     }
 
-    public ArrayList<Pizza> getFoodOrdered() {
-        return foodOrdered;
+    public Pizza getPizzaOrdered() {
+        return pizzaOrdered;
     }
 
 
@@ -81,15 +81,15 @@ public class Order {
         this.paymentMethod = paymentMethod;
     }
 
-    public void setFoodOrdered(ArrayList<Pizza> foodOrdered) {
-        this.foodOrdered = foodOrdered;
+    public void setPizzaOrdered(Pizza pizzaOrdered) {
+        this.pizzaOrdered = pizzaOrdered;
     }
 
 
     // Manual toString metode
     @Override
     public String toString() {
-        return "Order Number: " + orderNumber + " | Subtotal: $" + subTotal + " | Discount: $" + discount + " (" + discountPercentage + "%) | Total: $" + total + "\nPayment method: " + paymentMethod + "\nOrder:\n" + foodOrdered;
+        return "Order Number: " + orderNumber + " | Subtotal: $" + subTotal + " | Discount: $" + discount + " (" + discountPercentage + "%) | Total: $" + total + "\nPayment method: " + paymentMethod + "\nOrder: " + pizzaOrdered.getName();
     }
 
 }

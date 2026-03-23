@@ -1,106 +1,169 @@
 package ui;
+
+import java.util.Scanner;
+
 import model.*;
 import service.OrderArchiveHandler;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-
 public class MariosPizzabarUI {
 
-    private Menu menu = new Menu();
-    private Scanner scanner = new Scanner(System.in);
+    static Scanner scanner;
+    static Menu menu = new Menu();
+    static OrderArchiveHandler orderArchiveHandler;
 
-    public void start(){
-        boolean On = true;
+    public MariosPizzabarUI() {
+        scanner = new Scanner(System.in);
+        orderArchiveHandler = new OrderArchiveHandler();
+    }
 
-        while (On){
-            System.out.println("--- Marios Pizzabar ---");
-            System.out.println("1. Se menu");
-            System.out.println("2. Opret ordre");
-            System.out.println("3. Afslut");
 
-            System.out.print("Vælg: ");
-            String choice = scanner.nextLine();
+    public void start() {
+        System.out.println("Velkommen til Marios Pizzabar.");
+        boolean running = true;
+        while (running) {
+            printOptions();
+
+            int choice = 0;
+            if (scanner.hasNextInt()) {
+                choice = scanner.nextInt();
+                scanner.nextLine();
+            } else {
+                System.out.println("Ugyldigt input");
+            }
 
             switch (choice) {
-                case "1":
-                    menu.printMenu();
+                case 1:
+                    printMenu();
                     break;
-
-                case "2":
-                    createOrder();
+                case 2:
+                    addOrder();
                     break;
-
-                case "3":
-                    On = false;
-                    System.out.println("Lukker");
+                case 3:
+                    running = false;
                     break;
-
-                default:
-                    System.out.println("Ugyldigt input");
             }
 
-
-
         }
-
-
     }
 
-    private void createOrder(){
-        System.out.println("Navn: ");
-        String name = scanner.nextLine();
+    public static void printOptions() {
+        System.out.println();
+        System.out.println("Vælg en mulighed forneden:");
+        System.out.println("1. Print menu");
+        System.out.println("2. Opret ordre");
+        System.out.println("3. Afslut");
+    }
 
-        System.out.println("Telefonnummer: ");
-        int phoneNumber = Integer.parseInt(scanner.nextLine());
+    public static void printMenu() {
+        menu.printMenu();
+    }
 
-        System.out.println("Kundetype: 1 = Normal, 2 = VIP, 3 = medarbejder");
-        String typeInput = scanner.nextLine();
+    public static void addOrder() {
+
+        System.out.println("Indtast kundens navn");
+        String customerName = scanner.nextLine();
+
+        System.out.println("Indtast kundens telefonnummer");
+        int customerPhoneNumber = 12345678;
+        if (scanner.hasNextInt()) {
+            customerPhoneNumber = scanner.nextInt();
+            scanner.nextLine();
+        } else {
+            System.out.println("Ugyldigt input. Defaultet til telefonnummer 12345678");
+        }
+
+        System.out.println("Vælg kundetype:");
+        System.out.println("1: Normal kunde");
+        System.out.println("2: VIP Kunde");
+        System.out.println("3: Medarbejder");
+
+        int customerTypeChoice = 1;
+        if (scanner.hasNextInt()) {
+            customerTypeChoice = scanner.nextInt();
+            scanner.nextLine();
+        } else {
+            System.out.println("Ugyldigt input. Defaulter til Normal kunde");
+        }
 
         Customer customer;
-        if (typeInput.equals("2")){
-            customer = new VIPCustomer(name, phoneNumber);
+        switch (customerTypeChoice) {
+            case 2:
+                customer = new VIPCustomer(customerName, customerPhoneNumber);
+                break;
+            case 3:
+                customer = new EmployeeCustomer(customerName, customerPhoneNumber);
+                break;
+            default:
+                customer = new NormalCustomer(customerName, customerPhoneNumber);
         }
-        else if (typeInput.equals("3")) {
-            customer = new EmployeeCustomer(name, phoneNumber);
+
+
+        printMenu();
+        System.out.println("Vælg en pizza foroven");
+
+        int pizzaChosen;
+        if (scanner.hasNextInt()) {
+            pizzaChosen = scanner.nextInt();
         } else {
-            customer = new NormalCustomer(name, phoneNumber);
+            pizzaChosen = 1;
+            System.out.println("Ugyldigt input. Defaulter til en Vesuvio");
         }
 
-        menu.printMenu();
-        Pizza pizza = menu.choosePizza(scanner);
-
-        if(pizza != null) {
-            ArrayList<Pizza> foodOrdered = new ArrayList<>();
-            foodOrdered.add(pizza);
-
-            double subtotal = pizza.getPrice();
-            double discountPercentage = customer.getDiscountPercentage();
-
-            System.out.println("Vælg betalingsmetode 1 = Kontant, 2 = Debetkort, 3 = Kreditkort, 4 = Gavekort, 5 = Apple Pay");
-            String paymentInput = scanner.nextLine();
-            PaymentMethod paymentMethod = PaymentMethod.CASH;
-            switch (paymentInput){
-                case "2": paymentMethod = PaymentMethod.DEBIT_CARD;
-                break;
-                case "3": paymentMethod = PaymentMethod.CREDIT_CARD;
-                break;
-                case "4": paymentMethod = PaymentMethod.GIFT_CARD;
-                break;
-                case "5": paymentMethod = PaymentMethod.APPLE_PAY;
-
-            }
-
-            Order order = new Order(1, subtotal, discountPercentage,paymentMethod, foodOrdered);
-
-            System.out.println("Ordre oprettet");
-            System.out.println(customer);
-            System.out.println(order);
+        int pizzaIndex = pizzaChosen - 1;
+        Pizza pizza = menu.choosePizza(pizzaIndex);
 
 
+        System.out.println("Vælg en betalingsmetode:");
+        System.out.println("1. Kontant");
+        System.out.println("2. Debit kort");
+        System.out.println("3. Kredit kort");
+        System.out.println("4. Gavekort");
+        System.out.println("5. Apple Pay");
+
+        int paymentMethodChoice;
+        if (scanner.hasNextInt()) {
+            paymentMethodChoice = scanner.nextInt();
+            scanner.nextLine();
+        } else {
+            paymentMethodChoice = 1;
+            System.out.println("Ugyldigt input. Defaulter til kontant betaling.");
         }
+
+        PaymentMethod paymentMethod;
+        switch (paymentMethodChoice) {
+            case 2:
+                paymentMethod = PaymentMethod.DEBIT_CARD;
+                break;
+            case 3:
+                paymentMethod = PaymentMethod.CREDIT_CARD;
+                break;
+            case 4:
+                paymentMethod = PaymentMethod.GIFT_CARD;
+                break;
+            case 5:
+                paymentMethod = PaymentMethod.APPLE_PAY;
+                break;
+            default:
+                paymentMethod = PaymentMethod.CASH;
+        }
+
+
+        orderArchiveHandler.readOrders();
+        int orderNumber;
+        if (orderArchiveHandler.getOrders().isEmpty()) {
+            orderNumber = 1;
+        } else {
+            orderNumber = orderArchiveHandler.getLastOrderNumber() + 1;
+        }
+
+        double subTotal = pizza.getPrice();
+        double discountPercentage = customer.getDiscountPercentage();
+
+        Order order = new Order(orderNumber, subTotal, discountPercentage, paymentMethod, pizza);
+
+        orderArchiveHandler.addOrder(customer, order);
+        System.out.println("Order added");
 
     }
-
 
 }
