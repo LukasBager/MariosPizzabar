@@ -11,6 +11,7 @@ public class Order {
     private double discount;
     private double total;
     private PaymentMethod paymentMethod;
+    private OrderStatus orderStatus;
     private Pizza pizzaOrdered;
 
 
@@ -22,6 +23,7 @@ public class Order {
         this.discount = subTotal * (discountPercentage / 100);
         this.total = subTotal - this.discount;
         this.paymentMethod = paymentMethod;
+        this.orderStatus = OrderStatus.PENDING;
         this.pizzaOrdered = pizzaOrdered;
     }
 
@@ -49,6 +51,10 @@ public class Order {
 
     public PaymentMethod getPaymentMethod() {
         return paymentMethod;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
     }
 
     public Pizza getPizzaOrdered() {
@@ -79,6 +85,10 @@ public class Order {
 
     public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     public void setPizzaOrdered(Pizza pizzaOrdered) {
