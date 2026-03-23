@@ -80,7 +80,6 @@ public class OrderArchiveHandler {
     }
 
     public int getLastOrderNumber() {
-        // OPDATER
         readOrders();
         return orders.getLast().getOrderNumber();
     }
