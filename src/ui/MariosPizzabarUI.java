@@ -2,6 +2,7 @@ package ui;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -73,7 +74,7 @@ public class MariosPizzabarUI {
         System.out.println("2. Opret ordre");
         System.out.println("3. Se ordrehistorik");
         System.out.println("4. Se liste over kunder");
-        System.out.println("5. Se ordreliste sorteret efter beløb");
+        System.out.println("5. Se ordreliste sorteret efter afhentningstid");
         System.out.println("6. Se kundeliste sorteret alfabetisk efter navn");
         System.out.println("7. Afslut");
     }
@@ -211,7 +212,7 @@ public class MariosPizzabarUI {
         Order order = new Order(orderNumber, subTotal, discountPercentage, paymentMethod, orderPlacedTime, orderPickupTime, pizza);
 
         orderArchiveHandler.addOrder(customer, order);
-        System.out.println("Ordre tilføjet d. " + order.getOrderPlacedTime());
+        System.out.println("Ordre tilføjet d. " + order.getOrderPlacedTimeString());
 
     }
 
@@ -250,7 +251,7 @@ public class MariosPizzabarUI {
         if (ordersSorted.isEmpty()) {
             System.out.println("Ordreliste er tom.");
         } else {
-            System.out.println("Ordre sorteret efter beløb:");
+            System.out.println("Ordre sorteret efter afhentningstid:");
             for (Order o : ordersSorted) {
                 System.out.println(o);
                 System.out.println();

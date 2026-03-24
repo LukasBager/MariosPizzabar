@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Order {
@@ -14,6 +15,8 @@ public class Order {
     private PaymentMethod paymentMethod;
     private LocalDateTime orderPlacedTime;
     private LocalDateTime orderPickupTime;
+    private String orderPlacedTimeString;
+    private String orderPickupTimeString;
     private Pizza pizzaOrdered;
 
 
@@ -27,6 +30,8 @@ public class Order {
         this.paymentMethod = paymentMethod;
         this.orderPlacedTime = orderPlacedTime;
         this.orderPickupTime = orderPickupTime;
+        this.orderPlacedTimeString = orderPlacedTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
+        this.orderPickupTimeString = orderPickupTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
         this.pizzaOrdered = pizzaOrdered;
     }
 
@@ -61,6 +66,14 @@ public class Order {
     }
 
     public LocalDateTime getOrderPickupTime() { return orderPickupTime; }
+
+    public String getOrderPlacedTimeString() {
+        return orderPlacedTimeString;
+    }
+
+    public String getOrderPickupTimeString() {
+        return orderPickupTimeString;
+    }
 
     public Pizza getPizzaOrdered() {
         return pizzaOrdered;
@@ -98,6 +111,14 @@ public class Order {
 
     public void setOrderPickupTime(LocalDateTime orderPickupTime) { this.orderPickupTime = orderPickupTime; }
 
+    public void setOrderPlacedTimeString(String orderPlacedTimeString) {
+        this.orderPlacedTimeString = orderPlacedTimeString;
+    }
+
+    public void setOrderPickupTimeString(String orderPickupTimeString) {
+        this.orderPickupTimeString = orderPickupTimeString;
+    }
+
     public void setPizzaOrdered(Pizza pizzaOrdered) {
         this.pizzaOrdered = pizzaOrdered;
     }
@@ -106,7 +127,7 @@ public class Order {
     // Manual toString metode
     @Override
     public String toString() {
-        return "Ordre nummer: " + orderNumber + " | Subtotal: $" + subTotal + " | Rabat: $" + discount + " (" + discountPercentage + "%) | Total: $" + total + "\nBetalingsmetode: " + paymentMethod + "\nOrdre: " + pizzaOrdered.getName();
+        return "Ordre nummer: " + orderNumber + " | Subtotal: $" + subTotal + " | Rabat: $" + discount + " (" + discountPercentage + "%) | Total: $" + total + "\nBetalingsmetode: " + paymentMethod + "\nOrdre: " + pizzaOrdered.getName() + "\nAfhentningstid: " + orderPickupTimeString;
     }
 
 }

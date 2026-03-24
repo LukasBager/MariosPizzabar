@@ -115,7 +115,8 @@ public class OrderArchiveHandler {
     public static ArrayList<Order> getSortedOrders() {
         readOrders();
         ordersSorted = orders;
-        ordersSorted.sort((orderA, orderB) -> Double.compare(orderA.getTotal(), orderB.getTotal()));
+        // ordersSorted.sort((orderA, orderB) -> Double.compare(orderA.getTotal(), orderB.getTotal()));
+        ordersSorted.sort(Comparator.comparing(o -> o.getOrderPickupTime()));
         return ordersSorted;
     }
 
