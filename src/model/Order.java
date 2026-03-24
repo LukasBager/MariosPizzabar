@@ -127,7 +127,7 @@ public class Order {
     // Manual toString metode
     @Override
     public String toString() {
-        return "Ordre nummer: " + orderNumber + " | Subtotal: $" + subTotal + " | Rabat: $" + discount + " (" + discountPercentage + "%) | Total: $" + total + "\nBetalingsmetode: " + paymentMethod + "\nOrdre: " + pizzaOrdered.getName() + "\nAfhentningstid: " + orderPickupTimeString;
+        return "Ordre nummer: " + orderNumber + " | Subtotal: $" + subTotal + " | Rabat: $" + discount + " (" + discountPercentage + "%) | Total: $" + total + "\nBetalingsmetode: " + paymentMethod + "\nOrdre: " + pizzaOrdered.getName() + "\nBestillingstid: " + orderPlacedTimeString + "\nAfhentningstid: " + orderPickupTimeString;
     }
 
 }
