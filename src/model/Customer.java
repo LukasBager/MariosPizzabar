@@ -60,7 +60,7 @@ public abstract class Customer {
     // Manuel toString metode
     @Override
     public String toString() {
-        return "Customer: " + name + " | Phone Number: " + phoneNumber + " | Discount percentage: " + discountPercentage + "%";
+        return "Kunde: " + name + " | Telefonnummer: " + phoneNumber + " | Rabatprocent: " + discountPercentage + "%";
     }
 
 }

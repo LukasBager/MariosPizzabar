@@ -10,11 +10,10 @@ public class MariosPizzabarUI {
 
     static Scanner scanner;
     static Menu menu = new Menu();
-    static OrderArchiveHandler orderArchiveHandler;
+    static OrderArchiveHandler orderArchiveHandler = new OrderArchiveHandler();
 
     public MariosPizzabarUI() {
         scanner = new Scanner(System.in);
-        orderArchiveHandler = new OrderArchiveHandler();
     }
 
 
@@ -78,12 +77,18 @@ public class MariosPizzabarUI {
 
         System.out.println("Indtast kundens telefonnummer");
         int customerPhoneNumber = 12345678;
-        if (scanner.hasNextInt()) {
-            customerPhoneNumber = scanner.nextInt();
-        } else {
-            System.out.println("Ugyldigt input. Defaultet til telefonnummer 12345678");
+
+        boolean phoneNumVerified = false;
+        while (!phoneNumVerified) {
+            if (scanner.hasNextInt()) {
+                customerPhoneNumber = scanner.nextInt();
+                phoneNumVerified = true;
+            } else {
+                System.out.println("Ugyldigt input. Prøv igen");
+            }
+            scanner.nextLine();
         }
-        scanner.nextLine();
+
 
         System.out.println("Vælg kundetype:");
         System.out.println("1: Normal kunde");
@@ -114,13 +119,22 @@ public class MariosPizzabarUI {
         printMenu();
         System.out.println("Vælg en pizza foroven");
 
-        int pizzaChosen;
-        if (scanner.hasNextInt()) {
-            pizzaChosen = scanner.nextInt();
-        } else {
-            pizzaChosen = 1;
-            System.out.println("Ugyldigt input. Defaulter til en Vesuvio");
+        boolean pizzaChoiceVerified = false;
+        int pizzaChosen = 0;
+        while (!pizzaChoiceVerified) {
+            if (scanner.hasNextInt()) {
+                pizzaChosen = scanner.nextInt();
+                if (pizzaChosen > menu.getPizzas().size() || pizzaChosen < 1) {
+                    System.out.println("Pizza nummer ugyldigt, prøv igen.");
+                } else {
+                    pizzaChoiceVerified = true;
+                }
+            } else {
+                System.out.println("Ugyldigt input, prøv igen.");
+            }
+            scanner.nextLine();
         }
+
 
         int pizzaIndex = pizzaChosen - 1;
         Pizza pizza = menu.choosePizza(pizzaIndex);
@@ -133,13 +147,20 @@ public class MariosPizzabarUI {
         System.out.println("4. Gavekort");
         System.out.println("5. Apple Pay");
 
-        int paymentMethodChoice;
-        if (scanner.hasNextInt()) {
-            paymentMethodChoice = scanner.nextInt();
+        boolean paymentMethodChoiceVerified = false;
+        int paymentMethodChoice = 0;
+        while (!paymentMethodChoiceVerified) {
+            if (scanner.hasNextInt()) {
+                paymentMethodChoice = scanner.nextInt();
+                if (paymentMethodChoice > PaymentMethod.values().length | paymentMethodChoice < 1) {
+                    System.out.println("Ugyldigt input, prøv igen.");
+                } else {
+                    paymentMethodChoiceVerified = true;
+                }
+            } else {
+                System.out.println("Ugyldigt input, prøv igen.");
+            }
             scanner.nextLine();
-        } else {
-            paymentMethodChoice = 1;
-            System.out.println("Ugyldigt input. Defaulter til kontant betaling.");
         }
 
         PaymentMethod paymentMethod;
@@ -175,7 +196,7 @@ public class MariosPizzabarUI {
         Order order = new Order(orderNumber, subTotal, discountPercentage, paymentMethod, pizza);
 
         orderArchiveHandler.addOrder(customer, order);
-        System.out.println("Order added");
+        System.out.println("Ordre tilføjet d. " + order.getOrderPlacedTime());
 
     }
 
@@ -184,9 +205,9 @@ public class MariosPizzabarUI {
         ArrayList<Customer> customers = orderArchiveHandler.getCustomers();
         System.out.println();
         if (orders.isEmpty()) {
-            System.out.println("Order list empty.");
+            System.out.println("Ordre listen er tom.");
         } else {
-            System.out.println("Orders:");
+            System.out.println("Ordre:");
             for (int i = 0; i < orders.size(); i++) {
                 System.out.println(customers.get(i));
                 System.out.println(orders.get(i));
@@ -199,9 +220,9 @@ public class MariosPizzabarUI {
         ArrayList<Customer> customers = orderArchiveHandler.getCustomers();
         System.out.println();
         if (customers.isEmpty()) {
-            System.out.println("Customer list empty.");
+            System.out.println("Kundelisten er tom.");
         } else {
-            System.out.println("Customers:");
+            System.out.println("Kunder:");
             for (Customer c : customers) {
                 System.out.println(c);
             }

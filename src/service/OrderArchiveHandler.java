@@ -7,15 +7,13 @@ import java.util.ArrayList;
 
 public class OrderArchiveHandler {
 
-    private static ArrayList<Customer> customers;
-    private static ArrayList<Order> orders;
+    private static ArrayList<Customer> customers = new ArrayList<>();
+    private static ArrayList<Order> orders = new ArrayList<>();
 
-    public OrderArchiveHandler() {
-        customers = new ArrayList<>();
-        orders = new ArrayList<>();
-    }
+    private static ArrayList<Customer> customersSorted = new ArrayList<>();
+    private static ArrayList<Order> ordersSorted = new ArrayList<>();
 
-    public void addOrder(Customer customer, Order order) {
+    public static void addOrder(Customer customer, Order order) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("orders.txt", true))) {
 
             writer.write(customer.getName() + ",");
@@ -39,7 +37,7 @@ public class OrderArchiveHandler {
         }
     }
 
-    public void readOrders() {
+    public static void readOrders() {
         customers.clear();
         orders.clear();
         try (BufferedReader reader = new BufferedReader(new FileReader("orders.txt"))){
@@ -79,17 +77,17 @@ public class OrderArchiveHandler {
         }
     }
 
-    public int getLastOrderNumber() {
+    public static int getLastOrderNumber() {
         readOrders();
         return orders.getLast().getOrderNumber();
     }
 
-    public ArrayList<Order> getOrders() {
+    public static ArrayList<Order> getOrders() {
         readOrders();
         return orders;
     }
 
-    public ArrayList<Customer> getCustomers() {
+    public static ArrayList<Customer> getCustomers() {
         readOrders();
         return customers;
     }

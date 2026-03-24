@@ -39,6 +39,10 @@ public class Menu {
         return pizzas.get(index);
     }
 
+    public List<Pizza> getPizzas() {
+        return pizzas;
+    }
+
 
 
 
