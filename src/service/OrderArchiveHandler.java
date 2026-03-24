@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class OrderArchiveHandler {
 
@@ -109,6 +110,20 @@ public class OrderArchiveHandler {
     public static ArrayList<Customer> getCustomers() {
         readOrders();
         return customers;
+    }
+
+    public static ArrayList<Order> getSortedOrders() {
+        readOrders();
+        ordersSorted = orders;
+        ordersSorted.sort((orderA, orderB) -> Double.compare(orderA.getTotal(), orderB.getTotal()));
+        return ordersSorted;
+    }
+
+    public static ArrayList<Customer> getSortedCustomers() {
+        readOrders();
+        customersSorted = customers;
+        customersSorted.sort(Comparator.comparing(c -> c.getName()));
+        return customersSorted;
     }
 
 }

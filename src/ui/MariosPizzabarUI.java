@@ -50,6 +50,14 @@ public class MariosPizzabarUI {
                     printCustomers();
                     running = true;
                     break;
+                case 5:
+                    printSortedOrders();
+                    running = true;
+                    break;
+                case 6:
+                    printSortedCustomers();
+                    running = true;
+                    break;
                 default:
                     running = false;
                     break;
@@ -65,7 +73,9 @@ public class MariosPizzabarUI {
         System.out.println("2. Opret ordre");
         System.out.println("3. Se ordrehistorik");
         System.out.println("4. Se liste over kunder");
-        System.out.println("5. Afslut");
+        System.out.println("5. Se ordreliste sorteret efter beløb");
+        System.out.println("6. Se kundeliste sorteret alfabetisk efter navn");
+        System.out.println("7. Afslut");
     }
 
     public static void printMenu() {
@@ -210,7 +220,7 @@ public class MariosPizzabarUI {
         ArrayList<Customer> customers = orderArchiveHandler.getCustomers();
         System.out.println();
         if (orders.isEmpty()) {
-            System.out.println("Ordre listen er tom.");
+            System.out.println("Ordrelisten er tom.");
         } else {
             System.out.println("Ordre:");
             for (int i = 0; i < orders.size(); i++) {
@@ -229,6 +239,33 @@ public class MariosPizzabarUI {
         } else {
             System.out.println("Kunder:");
             for (Customer c : customers) {
+                System.out.println(c);
+            }
+        }
+    }
+
+    public static void printSortedOrders() {
+        ArrayList<Order> ordersSorted = orderArchiveHandler.getSortedOrders();
+        System.out.println();
+        if (ordersSorted.isEmpty()) {
+            System.out.println("Ordreliste er tom.");
+        } else {
+            System.out.println("Ordre sorteret efter beløb:");
+            for (Order o : ordersSorted) {
+                System.out.println(o);
+                System.out.println();
+            }
+        }
+    }
+
+    public static void printSortedCustomers() {
+        ArrayList<Customer> customersSorted = orderArchiveHandler.getSortedCustomers();
+        System.out.println();
+        if (customersSorted.isEmpty()) {
+            System.out.println("Kundelisten er tom.");
+        } else {
+            System.out.println("Kunder sorteret alfabetisk efter navn:");
+            for (Customer c : customersSorted) {
                 System.out.println(c);
             }
         }
