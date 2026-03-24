@@ -20,8 +20,8 @@ public class MariosPizzabarUI {
 
     public void start() {
         System.out.println("Velkommen til Marios Pizzabar.");
-        boolean running = true;
-        while (running) {
+        boolean running;
+        do {
             printOptions();
 
             int choice = 0;
@@ -35,22 +35,26 @@ public class MariosPizzabarUI {
             switch (choice) {
                 case 1:
                     printMenu();
+                    running = true;
                     break;
                 case 2:
                     addOrder();
+                    running = true;
                     break;
                 case 3:
                     printOrders();
+                    running = true;
                     break;
                 case 4:
                     printCustomers();
+                    running = true;
                     break;
-                case 5:
+                default:
                     running = false;
                     break;
             }
 
-        }
+        } while (running);
     }
 
     public static void printOptions() {
@@ -76,10 +80,10 @@ public class MariosPizzabarUI {
         int customerPhoneNumber = 12345678;
         if (scanner.hasNextInt()) {
             customerPhoneNumber = scanner.nextInt();
-            scanner.nextLine();
         } else {
             System.out.println("Ugyldigt input. Defaultet til telefonnummer 12345678");
         }
+        scanner.nextLine();
 
         System.out.println("Vælg kundetype:");
         System.out.println("1: Normal kunde");
