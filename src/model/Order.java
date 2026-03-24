@@ -12,22 +12,22 @@ public class Order {
     private double discount;
     private double total;
     private PaymentMethod paymentMethod;
-    private Pizza pizzaOrdered;
     private LocalDateTime orderPlacedTime;
     private LocalDateTime orderPickupTime;
+    private Pizza pizzaOrdered;
 
 
     // Constructor
-    public Order(int orderNumber, double subTotal, double discountPercentage, PaymentMethod paymentMethod, Pizza pizzaOrdered) {
+    public Order(int orderNumber, double subTotal, double discountPercentage, PaymentMethod paymentMethod, LocalDateTime orderPlacedTime, LocalDateTime orderPickupTime, Pizza pizzaOrdered) {
         this.orderNumber = orderNumber;
         this.subTotal = subTotal;
         this.discountPercentage = discountPercentage;
         this.discount = subTotal * (discountPercentage / 100);
         this.total = subTotal - this.discount;
         this.paymentMethod = paymentMethod;
+        this.orderPlacedTime = orderPlacedTime;
+        this.orderPickupTime = orderPickupTime;
         this.pizzaOrdered = pizzaOrdered;
-        this.orderPlacedTime = LocalDateTime.now();
-        this.orderPickupTime = orderPlacedTime.plusMinutes(20);
     }
 
 
@@ -56,15 +56,15 @@ public class Order {
         return paymentMethod;
     }
 
-    public Pizza getPizzaOrdered() {
-        return pizzaOrdered;
-    }
-
     public LocalDateTime getOrderPlacedTime() {
         return orderPlacedTime;
     }
 
     public LocalDateTime getOrderPickupTime() { return orderPickupTime; }
+
+    public Pizza getPizzaOrdered() {
+        return pizzaOrdered;
+    }
 
 
     // Setters
@@ -92,15 +92,15 @@ public class Order {
         this.paymentMethod = paymentMethod;
     }
 
-    public void setPizzaOrdered(Pizza pizzaOrdered) {
-        this.pizzaOrdered = pizzaOrdered;
-    }
-
     public void setOrderPlacedTime(LocalDateTime orderPlacedTime) {
         this.orderPlacedTime = orderPlacedTime;
     }
 
     public void setOrderPickupTime(LocalDateTime orderPickupTime) { this.orderPickupTime = orderPickupTime; }
+
+    public void setPizzaOrdered(Pizza pizzaOrdered) {
+        this.pizzaOrdered = pizzaOrdered;
+    }
 
 
     // Manual toString metode

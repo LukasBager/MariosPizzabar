@@ -1,5 +1,7 @@
 package ui;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -193,7 +195,10 @@ public class MariosPizzabarUI {
         double subTotal = pizza.getPrice();
         double discountPercentage = customer.getDiscountPercentage();
 
-        Order order = new Order(orderNumber, subTotal, discountPercentage, paymentMethod, pizza);
+        LocalDateTime orderPlacedTime = LocalDateTime.now();
+        LocalDateTime orderPickupTime = orderPlacedTime.plusMinutes(20);
+
+        Order order = new Order(orderNumber, subTotal, discountPercentage, paymentMethod, orderPlacedTime, orderPickupTime, pizza);
 
         orderArchiveHandler.addOrder(customer, order);
         System.out.println("Ordre tilføjet d. " + order.getOrderPlacedTime());

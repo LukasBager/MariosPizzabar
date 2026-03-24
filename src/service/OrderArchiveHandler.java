@@ -3,6 +3,9 @@ package service;
 import model.*;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class OrderArchiveHandler {
@@ -14,7 +17,7 @@ public class OrderArchiveHandler {
     private static ArrayList<Order> ordersSorted = new ArrayList<>();
 
     public static void addOrder(Customer customer, Order order) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("orders.txt", true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("orders.csv", true))) {
 
             writer.write(customer.getName() + ",");
             writer.write(customer.getPhoneNumber() + ",");
@@ -24,6 +27,13 @@ public class OrderArchiveHandler {
             writer.write(order.getSubTotal() + ",");
             writer.write(order.getDiscountPercentage() + ",");
             writer.write(order.getPaymentMethod().name() + ",");
+
+            DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            String orderPlacedTimeFormatted = myFormatObj.format(order.getOrderPlacedTime());
+            String orderPickupTimeFormatted = myFormatObj.format(order.getOrderPickupTime());
+            writer.write(orderPlacedTimeFormatted + ",");
+            writer.write(orderPickupTimeFormatted + ",");
+
             writer.write(order.getPizzaOrdered().getName() + ",");
             writer.write(order.getPizzaOrdered().getIngredients() + ",");
             writer.write(Double.toString(order.getPizzaOrdered().getPrice()));
@@ -40,7 +50,7 @@ public class OrderArchiveHandler {
     public static void readOrders() {
         customers.clear();
         orders.clear();
-        try (BufferedReader reader = new BufferedReader(new FileReader("orders.txt"))){
+        try (BufferedReader reader = new BufferedReader(new FileReader("orders.csv"))){
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
@@ -66,9 +76,18 @@ public class OrderArchiveHandler {
                 double subTotal = Double.parseDouble(parts[4]);
                 double discountPercentage = Double.parseDouble(parts[5]);
                 PaymentMethod paymentMethod = PaymentMethod.valueOf(parts[6]);
-                Pizza pizzaOrdered = new Pizza(parts[7], parts[8], Double.parseDouble(parts[9]));
 
-                Order order = new Order(orderNumber, subTotal, discountPercentage, paymentMethod, pizzaOrdered);
+                String orderPlacedTimeFormatted = parts[7];
+                String orderPickupTimeFormatted = parts[8];
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
+                LocalDateTime orderPlacedTime = LocalDateTime.parse(orderPlacedTimeFormatted, formatter);
+                LocalDateTime orderPickupTime = LocalDateTime.parse(orderPickupTimeFormatted, formatter);
+
+                Pizza pizzaOrdered = new Pizza(parts[9], parts[10], Double.parseDouble(parts[11]));
+
+                Order order = new Order(orderNumber, subTotal, discountPercentage, paymentMethod, orderPlacedTime, orderPickupTime, pizzaOrdered);
                 orders.add(order);
 
             }
