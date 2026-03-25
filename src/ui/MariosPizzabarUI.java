@@ -59,8 +59,12 @@ public class MariosPizzabarUI {
                     printSortedCustomers();
                     running = true;
                     break;
-                default:
+                case 7:
                     running = false;
+                    break;
+                default:
+                    System.out.println("Ugyldigt input, prøv igen.");
+                    running = true;
                     break;
             }
 
@@ -108,13 +112,23 @@ public class MariosPizzabarUI {
         System.out.println("2: VIP Kunde");
         System.out.println("3: Medarbejder");
 
+        boolean customerTypeVerified = false;
         int customerTypeChoice = 1;
-        if (scanner.hasNextInt()) {
-            customerTypeChoice = scanner.nextInt();
-            scanner.nextLine();
-        } else {
-            System.out.println("Ugyldigt input. Defaulter til Normal kunde");
+
+        while (!customerTypeVerified) {
+            if (scanner.hasNextInt()) {
+                customerTypeChoice = scanner.nextInt();
+                scanner.nextLine();
+                if (customerTypeChoice > 3 | customerTypeChoice < 1) {
+                    System.out.println("Ugyldigt input, prøv igen.");
+                } else {
+                    customerTypeVerified = true;
+                }
+            } else {
+                System.out.println("Ugyldigt input, prøv igen.");
+            }
         }
+
 
         Customer customer;
         switch (customerTypeChoice) {
