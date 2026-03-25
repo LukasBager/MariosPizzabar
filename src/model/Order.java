@@ -25,8 +25,8 @@ public class Order {
         this.orderNumber = orderNumber;
         this.subTotal = subTotal;
         this.discountPercentage = discountPercentage;
-        this.discount = subTotal * (discountPercentage / 100);
-        this.total = subTotal - this.discount;
+        this.discount = Math.round((subTotal * (discountPercentage / 100)) * 100.0) / 100.0;
+        this.total = Math.round((subTotal - this.discount) * 100.0) / 100.0;
         this.paymentMethod = paymentMethod;
         this.orderPlacedTime = orderPlacedTime;
         this.orderPickupTime = orderPickupTime;
